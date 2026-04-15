@@ -45,8 +45,8 @@ function Polindrome($string){
 Polindrome("Ana");
 
 //new functions string: strtolower, strtoupper, str_split, strlen(index 1), strpos(index 0)
-//new functions array: array_splice, array_reverse, count(array)
-//other functions: gettype()-> string, is_int() -> bool
+//new functions array: array_splice, array_reverse, count(array), unset(array) -> destroy, array_push, array_pop
+//other functions: gettype()-> string, is_int() -> bool, settype
 
 /*3. Te shkruhet nje klase qe e paraqet mesazhin “Lenda PHP”, ku ‘PHP eshte nje vlere 
 e argumentit te nje metode brenda klasës.*/
@@ -112,8 +112,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //$_SERVER['REQUEST_METHOD'] can ei
     // open and read the file line by line
     $file = fopen("Detyra.txt", "r");
     
-    while (($line = fgets($file)) !== false) {
+    while (!feof($file)) {
         // split each line by comma → [id, emri, mbiemri]
+        $line = fgets($file);
         $parts = explode(",", trim($line));
         
         $id     = $parts[0];
@@ -146,8 +147,191 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //$_SERVER['REQUEST_METHOD'] can ei
 
 </body>
 </html>
+<!DOCTYPE html>
+<html>
+<body>
+    <form method="POST" action="">
+        <input type="text" name="n_ID" placeholder="Shkruaj numrin n...">
+        <button type="submit">Paraqit tabelen</button>
+    </form>
 
-<?php //regex tndryshem
+</body>
+</html>
 
-
+<?php //7.
+echo "<br>";
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $n = $_POST['n_ID'];
+for($i=0; $i<$n; $i++){
+    for($j=0; $j<$n; $j++){
+        echo (($j+$i)%$n)+1 . ",";
+    }
+    echo "<br>";
+}
+}
 ?>
+</br></br>
+<!DOCTYPE html>
+<html>
+    <body>
+        <form method="POST" action="">
+            <table>
+            <tr>
+                <td>Emri</td>
+                <td><input type="text" name="name_ID" placeholder="Emri"></td>
+</tr></br></br>
+<tr>
+    <td>Mbiemri</td>
+    <td><input type="text" name="mbiemer_ID" placeholder="Mbiemri"></td>
+</tr></br></br>
+<tr>
+    <td>Data e lindjes</td>
+    <td><input type="date" name="date_ID" placeholder="01/01/2000"></td>
+</tr>
+<tr>
+    <td><button type="submit"> Kalkulo vitet</button></td>
+</tr>
+</table>
+</form>
+
+<?php //8. 
+/*
+echo "<br>";
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $birth = $_POST['date_ID'];
+    $now = date("Y-m-d");
+    $birth = explode("-", trim($birth));
+    $now = explode("-", trim($now));
+    $age = $now[0]-$birth[0];
+  if ($now[1] < $birth[1] || ($now[1] == $birth[1] && $now[2] < $birth[2])) {
+        $age--;
+    }
+    unset($birth);
+    echo "Ju i keni: " . $age . " vjeç.";
+    echo "<br>";
+} */
+?>
+
+<?php //9. per regex e bon funksionin me preg_match("regex_pattern", the value itself)
+//file funct: fgetc, fgets, fwrite(file, text), fopen, feof(loop), fread(file, filesize(file)), fclose
+//unlink(file) --> delete
+$regex = '/^[0-9]{2}\.[a-zA-Z]{3}\.[0-9]{2}\-[0-9]{3}\!$/';
+//preg_match('pattern', $text, $matches(word like 2026 or it looks inside pattern))
+/*<? php
+$teksti = 'Eshte [nje] provim [shume] ji duhur per kete [lende].';
+preg_match('#\[( .* )\]#', $teksti, $match);
+print $match[1]; -> match[0] takes all the regex, match[1] -> only (.*). Output: nje] provim [shume]]i duhur per kete [lende
+now (.*)-> biggest chunk possible while (.*?) -> smallest chunk possible
+?>*/
+
+//include_once/include -> script continues after warning
+//require, require_once -> script stops after fatal error
+//include_once/require_once -> script will be loaded only once, no matter how many times its called
+//require/include -> script will load every single time it is called
+
+//const: const name = value;
+//define('name', value);
+?>
+</br></br>
+<!DOCTYPE html>
+<html>
+    <body>
+        <form method="POST" action="">
+            <table>
+                <tr>
+                    <td>Data 1:</td>
+            <td><input type="date" name="date_in"></td>
+</tr></br></br>
+<tr>
+                    <td>Data 2:</td>
+            <td><input type="date" name="date_on"></td>
+</tr></br></br>
+<tr>
+            <td><button type="submit">Sa eshte diferenca?</button></td>
+</tr>
+</table>
+        </form>
+    </body>
+    </html>
+
+    <?php //10. data - data
+    echo "<br>";
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        $data1 = $_POST['date_in'];
+        $data2 = $_POST['date_on'];
+        $data1 = explode("-", trim($data1));
+        $data2 = explode("-", trim($data2));
+       $year = $data1[0] - $data2[0];
+$month = $data1[1] - $data2[1];
+$day = $data1[2] - $data2[2];
+
+// If days are negative, borrow from months
+if ($day < 0) {
+    $month--;
+    $day += 30; // Rough estimate, which is why DateTime is better!
+}
+
+// If months are negative, borrow from years
+if ($month < 0) {
+    $year--;
+    $month += 12;
+}
+
+echo "Vite: $year, Muaj: $month, Dite: $day";
+    }
+
+    /*if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    // Create DateTime objects from the inputs
+    $d1 = new DateTime($_POST['date_in']);
+    $d2 = new DateTime($_POST['date_on']);
+
+    // This one line does all the complicated math for you
+    $interval = $d1->diff($d2);
+
+    echo "Diferenca eshte: <br>";
+    echo "Vite: " . $interval->y . "<br>";
+    echo "Muaj: " . $interval->m . "<br>";
+    echo "Dite: " . $interval->d;
+} */
+
+    //date('h', 'H', 'Y-m-d', 'd', 'D', 'Y', 'y')
+    ?>
+
+    <?php
+$filename = "studentet.php";
+$file = fopen($filename, "w");
+
+if ($file) {
+    $content = "Emri: Filan, Mbiemri: Fisteku, Fakulteti: Shkenca Kompjuterike";
+    fwrite($file, $content);
+    fclose($file);
+    echo "Skedari u krijua dhe të dhënat u shkruan me sukses.<br><br>";
+}
+if (file_exists($filename)) {
+    echo "Emri i skedarit: " . $filename . "<br>";
+    echo "Madhësia e skedarit: " . filesize($filename) . " bytes<br>";
+    $permbajtja = file_get_contents($filename);
+    echo "Përmbajtja e skedarit: " . $permbajtja;
+
+} else {
+    echo "Skedari nuk ekziston!";
+}
+//file_put_contents($filename, ""); -> me e bo empty
+//PHP- Hypertext Preprocessor
+?>
+
+
+<?php //COOKIES
+// We are making a cookie named "perdoruesi" with the value "Brotato"
+// it will last for 1 hour (3600 seconds)
+setcookie("perdoruesi", "Brotato", time() + 3600, "/");
+?>
+
+<?php
+if (isset($_COOKIE['perdoruesi'])) {
+    echo "Përshëndetje përsëri, " . $_COOKIE['perdoruesi'];
+} else {
+    echo "Ti je një vizitor i ri!";
+}
+?>
+
