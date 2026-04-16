@@ -333,5 +333,31 @@ if (isset($_COOKIE['perdoruesi'])) {
 } else {
     echo "Ti je një vizitor i ri!";
 }
+
+//string -> array explode()
+//array -> string implode()
+
+$reg = '/^[a-zA-Z0-9\.\_\-]+\@[a-z]{3,7}\.[a-z]{2,5}$/';
+// /^[^0-9] -> nuk guxon me qen numer
+
+//array_sum and count(array) always uses values in associative arrays, array_keys -> extract keys
+//ksort() -> sort by key, asort -> sort by value, sort() -> in associative destroys keys
+/* foreach me vargje asociative:
+    foreach ($studentet as $emri => $nota) {
+    if ($nota > $mesatarja) {
+        echo $emri . ": " . $nota . "<br>";
+    }
+}*/
+
+$reg2 = '/^[a-z]{2,}\.[a-z0-9]{2,}\@[a-z]{7}\.[a-z]{3}\-[a-z]{2}\.[a-z]{3}$/'
+$email = "emri.mbiemri@student.uni-pr.edu";
+if(preg_match($reg2, $email)){
+    echo "yay";
+}
+else{
+    echo "no";
+}
+
+//__toString() -> mi kthy nstring funksioni
 ?>
 

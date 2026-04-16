@@ -44,4 +44,6 @@ $txt = "Content i ri i file\n";
 fwrite($file, $txt);
 fclose($file);
 unlink("newtext.txt");
+
+//file_exists
 ?>
