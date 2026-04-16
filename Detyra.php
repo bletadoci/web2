@@ -360,4 +360,13 @@ else{
 
 //__toString() -> mi kthy nstring funksioni
 ?>
+<? //Det
+$var = " "
+if(empty(trim($var))){
+    echo "Nuk keni submit kurgjo.";
+}
+echo "Bravo!";
 
+//Det
+
+?>
