@@ -1,6 +1,6 @@
 def create_polybius_square():
     square = {}
-    alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"  # J is combined with I
+    alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
     for index, letter in enumerate(alphabet):
         row = (index // 5) + 1
         col = (index % 5) + 1
@@ -28,7 +28,7 @@ def decrypt(text):
     reverse_square = {v: k for k, v in square.items()}
     result = []
 
-    words = text.split("  ")  # double space separates words
+    words = text.split("  ") 
     for word in words:
         pairs = word.strip().split(" ")
         for pair in pairs:
