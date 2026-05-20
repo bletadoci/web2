@@ -1,51 +1,89 @@
 <!DOCTYPE html>
 <html>
-    <head>
-
-    </head>
-    <body>
-       <!-- <form action = "readData.php" method ="post">
-            <label>Emri</label>
-            <input type="text" name="emri">
-            <br>
-            <button type="submit" name="submit">Ruaj</button>
-            data(obj){(key)emri: value,} qishtu i merr edhe i vendos si anetar ne $_POST[emri => value,..]
-        
-        </form>
-    -->
-        <div>
-            <label>Emri</label>
-            <input type="text" id="emri">
-            <label>ID</label>
-            <input type="text" id="id">
-            <br>
-            <button id="btnKerko">Kerko</button>
-            <button id="btnRuaj">Kerko</button>
-            <button id="btnEdit">Kerko</button>
-            <button id="btnDelete">Kerko</button>
-        </div>
+<head>
+    <title>PDO + AJAX Example</title>
+</head>
+<body>
+    <div>
+        <label>Emri</label>
+        <input type="text" id="emri">
+        <label>ID</label>
+        <input type="text" id="id">
         <br>
-        <div id="div_r"></div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(function(){
-                function kerko(){
-                    $.ajax({
-                        url: "readData.php",
-                        method: "POST", //statik keyword method
-                        data:{
-                            //emri_klient : $("#emri").val()
-                            kerko : "kerko"
-                        },
-                        success: function(data){
-                            $("div_r").html(data)
-                        }
-                    })
-                }
-                $("#btnKerko").click(function(){
-                    kerko();
-                })
-            })
-        </script>
-    </body>
+        <button id="btnKerko">Kerko (Search)</button>
+        <button id="btnRuaj">Ruaj (Save)</button>
+        <button id="btnEdit">Edit</button>
+        <button id="btnDelete">Delete</button>
+    </div>
+    <br>
+    <div id="div_r"></div>
+    <br>
+    <div id = "message"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            function kerko(){
+                $.ajax({
+                    url: "api.php",
+                    method: "GET",
+                    data: { action: "kerko" },
+                    success: function(data){
+                        $("#div_r").html(data);
+                    }
+                });
+            }
+            function ruaj(){
+                $.ajax({
+                    url: "api.php",
+                    method: "POST",
+                    data: {
+                        action: "ruaj",
+                        emri: $("#emri").val()
+                    },
+                    success: function(data){
+                        $("#message").html(data);
+                        kerko(); 
+                    }
+                });
+            }
+            function edit(){
+                $.ajax({
+                    url: "api.php",
+                    method: "POST",
+                    data: {
+                        action: "edit",
+                        id: $("#id").val(),
+                        emri: $("#emri").val()
+                    },
+                    success: function(data){
+                        $("#message").html(data);
+                        kerko(); 
+                    }
+                });
+            }
+            function fshij(){
+                $.ajax({
+                    url: "api.php",
+                    method: "POST",
+                    data: {
+                        action: "delete",
+                        id: $("#id").val()
+                    },
+                    success: function(data){
+                        $("#message").html(data);
+                        kerko(); 
+                    }
+                });
+            }
+
+            $("#btnKerko").click(kerko);
+            $("#btnRuaj").click(ruaj);
+            $("#btnEdit").click(edit);
+            $("#btnDelete").click(fshij);
+
+        });
+    </script>
+</body>
 </html>

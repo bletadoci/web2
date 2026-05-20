@@ -1,6 +1,8 @@
-Hierarchy:
+Flow:
 
-->new PDO(object attr "mysql: host={dbname)
+STATIC DATA DOESNT NEED TO BE PREPARED
+
+->new PDO(object attr "mysql: host=...dbname...)
 var = pdoobj->prepare (query: SELECT (*)email; FROM users; WHERE id = ':id' -> placeholder dmth/ ose id = ?
 UPDATE users; SET name = ':name'; WHERE id = ':id'
 INSERT INTO users (name, email, age.. all columns/ifnot then null) VALUES (?, ?, ?..) -> placeholder
@@ -68,7 +70,13 @@ $stmt = $pdo->prepare("SELECT name, email FROM users ORDER BY Emri ASC");
 $result = query($stmt)
 
 
-
+<?$pdo = new PDO(
+    'mysql:host=localhost;dbname=mydb;charset=utf8mb4',
+    'username', //qetu e shkrun
+    'password',
+    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION] //standard, this means everything enveloped in try catch
+); 
+?>
 
 <? $pdo = new PDO(
     'mysql:host=localhost;dbname=mydb;charset=utf8mb4',
